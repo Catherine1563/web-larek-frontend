@@ -219,11 +219,11 @@ interface UserInter {
 }
 
 enum Events {
-  DELETE_PRODUCT = 'basket:delet-product' //Удаление продукта {basket, product}
-  CLOSE_MODAL = 'modal:close-modal' //Закрытие модального окна {modal}
-  OPEN_MODAL = 'modal:open-modal' //Открытие модального окна {modal}
-  CLEAR_INPUT = 'validation:clear-input' //Очистка инпута {validation, input}
-  SET_ERROR_MESSANGER = 'validation:set-error-messanger' //Установка сообщения об ошибке {validation, span}
-  CHECK_CORRECT = 'validation:check-correcr' //Проверка инпута на ошибку {validation, input}
+  DELETE_PRODUCT = 'basket:delet-product', //Удаление продукта {basket, product}
+  CLOSE_MODAL = 'modal:close-modal', //Закрытие модального окна {modal}
+  OPEN_MODAL = 'modal:open-modal', //Открытие модального окна {modal}
+  CLEAR_INPUT = 'validation:clear-input', //Очистка инпута {validation, input}
+  SET_ERROR_MESSANGER = 'validation:set-error-messanger', //Установка сообщения об ошибке {validation, span}
+  CHECK_CORRECT = 'validation:check-correcr', //Проверка инпута на ошибку {validation, input}
 }
 ```
