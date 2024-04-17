@@ -180,7 +180,7 @@ UML-схема проекта "Веб-ларек"
 Также у класса есть интерфейс ```ValidationInter``` содержащий элементы валидации.
 
 ## Ключевые типы данных
-```
+```js
 type catalog = Product[]; //Католог продуктов
 type list = Product[]; //Лист продуктов дабавленный в корзину
 type total = number; // Цена продукта
@@ -201,9 +201,7 @@ interface ProductInter {
 interface UserInter {
   paymentMethod: string; //Способ оплаты
   address: string; //Адрес пользователя
-```js
   email: string; //Почта пользователя
-```
   phone: number; //Телефон рользователя
 }
 
