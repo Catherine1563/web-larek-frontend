@@ -43,7 +43,7 @@ yarn build
 ## Архитектура
 UML-схема проекта "Веб-ларек"
 
-![Web-ларек](https://github.com/Catherine1563/web-larek-frontend/assets/144515483/d0d9f2ef-cb22-417b-aca7-155fb82a25c0)
+![Web-ларек](https://github.com/Catherine1563/web-larek-frontend/assets/144515483/8bfed16e-8c95-4e8b-9978-2bcd0f2491a0)
 
 ## Базовый код
 
@@ -76,7 +76,7 @@ UML-схема проекта "Веб-ларек"
 3. ```post(string, object, ApiPostMethods): void``` - добавление данными сервер
 
 ### 3. Класс EventEmitter
-Класс предназначен для позволяет подписываться на события и уведомлять подписчиков о наступлении события.
+Класс предназначен для реализации подписывания на события и уведомления подписчиков о наступлении события, а также использует паттерн "Наблюдатель" для реализации функционалов класса.
 
 Конструктор принимает такие аргументы:
 1. ```events: Map <string, Subscriber>``` - хранит в себе событие и ключ на него
@@ -87,7 +87,20 @@ UML-схема проекта "Веб-ларек"
 3. ```emit(string, T): void``` - уведомление о наступлении событие
 4. ```onAll(EmitterEvent): void``` - включение всех событий 
 5. ```offAll(): void``` - выключение всех событий
-6. ```trigger(string, Partial<T>): void``` - генерирует заданное событие с заданными аргументами 
+6. ```trigger(string, Partial<T>): void``` - генерирует заданное событие с заданными аргументами
+
+### 4. Класс Component
+
+Конструктор принимает такие аргументы:
+1. ```container: HTMLElement``` - содержет элемент страницы
+
+Класс имеет такие методы:
+1. ```toggleClass(HTMLElement, string, boolean): void``` - переключение класса элемента
+2. ```hide(HTMLElement): void``` - скрывает элемент страницы
+3. ```show(HTMLElement): void``` - показывает элемент страницы
+4. ```disable(HTMLElement): void``` - блокирует элемент на странице
+5. ```setText(HTMLElement, string): void``` - устанавлевает текст в элемент
+6. ```setImage(HTMLElement, string, string): void``` - устанавлевает картинку в элемент
 
 ## Компоненты модели данных (бизнес-логика)
 
@@ -188,7 +201,9 @@ interface ProductInter {
 interface UserInter {
   paymentMethod: string; //Способ оплаты
   address: string; //Адрес пользователя
+```js
   email: string; //Почта пользователя
+```
   phone: number; //Телефон рользователя
 }
 
