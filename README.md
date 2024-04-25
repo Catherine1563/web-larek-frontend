@@ -43,7 +43,7 @@ yarn build
 ## Архитектура
 UML-схема проекта "Веб-ларек"
 
-![Web-ларек](https://github.com/Catherine1563/web-larek-frontend/assets/144515483/8bfed16e-8c95-4e8b-9978-2bcd0f2491a0)
+![Web-ларек-пример](https://github.com/Catherine1563/web-larek-frontend/assets/144515483/541205b7-0e7d-4e13-9b0b-dbdebd2f8668)
 
 ## Базовый код
 
@@ -56,10 +56,10 @@ UML-схема проекта "Веб-ларек"
 3. ```price: number``` - цена продукта
 4. ```category: string``` - категория продукта
 5. ```description: string``` - описание продукта
+6. ```id: string``` - id продукта
 
 Класс имеет такие методы:
-1. ```setImage(string):void```, ```setTitle(string):void```, ```setCategory(string):void```, ```setPrice(number):void```, ```setDescription(string):void``` - для установки значений в HTMLElement.
-2. ```getPrice():number```, ```getTitle():string```, ```getImage():string```, ```getCategory():string``` - для получения значений
+1. ```renderProduct(string,string,string,string,string,string): void``` - для редактирование карточки продукта.
 
 Также у класса есть интерфейс ```ProductInter``` содержащий элементы входящие в контент продукта.
 Заполнение карточки продукта происходит путем взятия из Api нужных данных. Данный класс относится к доменному слой архитектуры. 
@@ -94,21 +94,6 @@ UML-схема проекта "Веб-ларек"
 
 Данный класс относится к прикладному слой архитектуры.
 
-### 4. Класс Component
-
-Конструктор принимает такие аргументы:
-1. ```container: HTMLElement``` - содержет элемент страницы
-
-Класс имеет такие методы:
-1. ```toggleClass(HTMLElement, string, boolean): void``` - переключение класса элемента
-2. ```hide(HTMLElement): void``` - скрывает элемент страницы
-3. ```show(HTMLElement): void``` - показывает элемент страницы
-4. ```disable(HTMLElement): void``` - блокирует элемент на странице
-5. ```setText(HTMLElement, string): void``` - устанавлевает текст в элемент
-6. ```setImage(HTMLElement, string, string): void``` - устанавлевает картинку в элемент
-
-Данный класс относится к доменному слой архитектуры.
-
 ## Компоненты модели данных (бизнес-логика)
 
 ### 1. Класс Ctalog
@@ -118,112 +103,148 @@ UML-схема проекта "Веб-ларек"
 1. ```catalog: Product[]``` - массив классов Product 
 
 Класс имеет такие методы:
-1. ```fillСatalog(Product): void``` - для заполнение каталога продуктами
-2. ```getCatalog(): Product[]``` - для получение католога с продуктами
+1. ```addProduct(Product): void``` - для заполнение каталога продуктами
 
-Данный класс относится к прикладному слой архитектуры.
+Также у класса есть интерфейс ```ICatalog``` содержащий элементы входящие в контент каталога. Данный класс относится к доменному слой архитектуры.
 
 ### 2. Класс Basket
 Класс предназначен для заполнение корзины продуктами, а также удаление продукта из корзины, подсчет финальной суммы товаров и очистка корзины после оформления. Также данный класс должен содержать несколько продуктов, а именно массив класса Product.
 
 Конструктор принимает такие аргументы:
-1. ```buttonDesign: HTMLButtonElement``` - кнопка оформление заказа
-2. ```buttonDelete: HTMLButtonElement``` - кнопка удаление товара
-3. ```list: Product[]``` - лист продуктов для оформления
-4. ```total: number``` - общая сумма продуктов
+
+1. ```list: Product[]``` - лист продуктов для оформления
+2. ```total: number``` - общая сумма продуктов
 
 Класс имеет такие методы:
-1. ```setTotal(number): void```, ```setListProduct(Product[]): void``` - для установки значений
-2. ```getTotal(): number```, ```getListProduct(): Product[]``` - для получение значений
-3. ```deleteProduct(Product): void``` - для удаление продукта из корзины
-4. ```clearBasket(Product[]): void``` - для очистки корзины
-5. ```totalCost(number): void``` - для подсчета общей суммы
+1. ```addList(Product): void``` - для добавление продукта в лист
+2. ```deleteProductList(Product): void``` - для удаление продукта из листа
+3. ```totalPrice(): void``` - для подсчета общей суммы в корзине
+4. 
+Также у класса есть интерфейс ```IBasket``` содержащий элементы входящие в контент каталога. Удаление продукта из корзины происходит через событие. Данный класс относится к доменному слой архитектуры.
 
-Удаление продукта из корзины происходит через событие. Данный класс относится к доменному слой архитектуры.
-
-### 3. Класс User
+### 3. Класс ApiResponses
 Класс предназначен для получение информации о пользователе при оформлении заказа.
 
 Конструктор принимает такие аргументы:
-1. ```buttonOnline: HTMLButtonElement``` - кнопка "онлайн" оплаты
-2. ```buttonUponReceipt: HTMLButtonElement``` - кнопка "при выдачи" оплаты 
-3. ```paymentMethod: string``` - переменная для определение способа оплаты
-4. ```address: string``` - адресс пользователя
-5. ```email: string``` - почта пользователя
-6. ``` phone: number``` - телефон пользователя
+1. ```readonly cdn: string;``` - кнопка "онлайн" оплаты
 
 Класс имеет такие методы:
-1. ```getAddress(): string```, ```getEmail(): string```, ```getPhone(): number``` - для получения значений
-2. ```determinePaymentMethod(string): void``` - для определения способы оплаты
+1. ```getListProduct(Catalog): Promise<Catalog>``` - для получения продуктов с сервера
+2. ```postOrder(object): void``` - для отправки на сервер данные об оплате
 
-Также у класса есть интерфейс ```UserInter``` содержащий элементы данных пользователя при оформлении заказа. Данный класс относится к доменному слой архитектуры.
+Данный класс относится к слой портов и адаптеров архитектуры.
 
 ### 4. Класс Modal
 Класс предназначен для реализации функционала вснх модальных окон и заполнеии их контентом.
 
 Конструктор принимает такие аргументы:
 1. ```buttonClose: HTMLButtonElement``` - кнопка закрытия окна
-2. ```buttonBuy: HTMLButtonElement``` - кнопка покупки
-3. ```content: ModalInter``` - контент окна
 
 Класс имеет такие методы:
 1. ```close(): void``` - для закрытие окна
 2. ```open(): void``` - для открытие окна
-3. ```setContent(HTMLElement): void``` - для заполнение окна контентом
 
-Также у класса есть интерфейс ```ModalInter``` содержащий элемент контента модального окна.
+Также у класса есть интерфейс ```IModal``` содержащий элемент контента модального окна.
 Открытие и закрытие модального окна происходит через события. Данный класс относится к доменному слой архитектуры.
 
 ### 5. Класс Validation
 Класс предназначен для реализации проверки форм на наличие ошибок и вывод этих ошибок.
 
+Класс имеет такие методы:
+1. ```setEventListeners(HTMLElement): void``` - установка событий на форму
+2. ```checkInputValidity(HTMLElement, HTMLInputElement): void``` - проверка на валидацию
+3. ```showInputError(HTMLElement,HTMLInputElement, string): void``` - показ сообщения об ошибке
+4. ```hideInputError(HTMLElement, HTMLInputElement): void``` - скрытие сообщения об ошибке
+5. ```hasInvalidInput(HTMLInputElement[]): boolean``` - возвращение проверки на правельный ввод
+6. ```toggleButtonState(HTMLInputElement[], HTMLButtonElement): void``` - менятие состояния кнопки
+7. ```сlearValidation(HTMLElement): void``` -очистка input
+
+Очистка input, проверка на ошибки и установка сообщения об ошибке происходит через события. Данный класс относится к прикладному слой архитектуры.
+
+### 6. Класс ModalBasket
+Класс предназначен для реализации проверки форм на наличие ошибок и вывод этих ошибок.
+
 Конструктор принимает такие аргументы:
-1. ```errors: HTMLElement``` - элемент вывода сообщения об ошибке
-2. ```submit: HTMLButtonElement``` - кнопка перехода на другое модальное окно
-3. ```input: HTMLElement``` - форма заполнения
-4. ```valid: boolean``` - переменная для определение есть ли в форме ошибка
-5. ```errorMessanger: string[]``` - сообщении об ошибке
+1. ```totalFinel: HTMLElement``` - финальная цена
+2. ```buttonDesign: HTMLButtonElement``` - кнопка оформление заказа
+3. ```contentList: HTMLElement``` - лист корзины
 
 Класс имеет такие методы:
-1. ```reset(): void``` - сброс форм
-2. ```setErrorMessanger(string, HTMLElement): void``` - установка сообщения об ошибке
-3. ```checkValidation(boolean): void``` - проверка формы на ошибку
+1. ```renderBasketClear(Basket): void``` - очистка корзины
+2. ```renderBasket( data: {Product[]}, Basket): void``` - редактирование контента в модальное окно корзины
 
-Также у класса есть интерфейс ```ValidationInter``` содержащий элементы валидации.
-Очистка input, проверка на ошибки и установка сообщения об ошибке происходит через события. Данный класс относится к прикладному слой архитектуры.
+Данный класс относится к прикладному слой архитектуры.
+
+### 7. Класс BasketView
+Класс предназначен для реализации проверки форм на наличие ошибок и вывод этих ошибок.
+
+Класс имеет такие методы:
+1. ```render(data: {Product[]}, ModalBasket,Basket): void``` - установка контента в модальное окно корзины
+
+Данный класс относится к прикладному слой архитектуры.
+
+### 8. Класс ModalProduct
+Класс предназначен для реализации проверки форм на наличие ошибок и вывод этих ошибок.
+
+Класс имеет такие методы:
+1. ```renderProductModal(Product, Basket, string ): void``` - установка контента модального окна карточки
+
+Данный класс относится к прикладному слой архитектуры.
+
+### 9. Класс ModalSuccsess
+Класс предназначен для реализации проверки форм на наличие ошибок и вывод этих ошибок.
+
+Класс имеет такие методы:
+1. ```renderSucsses( Basket, String, string, string): void``` - установка модального окна об успехе
+
+Данный класс относится к прикладному слой архитектуры.
+
+### 10. Класс ModalFormUser
+Класс предназначен для реализации проверки форм на наличие ошибок и вывод этих ошибок.
+
+Класс имеет такие методы:
+1. ```renderFormUser( Basket, String): void``` - установка модального окна данных о пользователе
+
+Данный класс относится к прикладному слой архитектуры.
+
+### 11. Класс ModalFormAddress
+Класс предназначен для реализации проверки форм на наличие ошибок и вывод этих ошибок.
+
+Класс имеет такие методы:
+1. ```renderFormAdress( Basket): void``` - установка модального окна адрес и оплаты
+
+Данный класс относится к прикладному слой архитектуры.
+
+### 12. Класс CatalogAddPage
+Класс предназначен для реализации проверки форм на наличие ошибок и вывод этих ошибок.
+
+Класс имеет такие методы:
+1. ```renderCatalog( Product[], ModalProduct, Basket, string): void``` - установка каталога на страницу
+
+Данный класс относится к прикладному слой архитектуры.
 
 ## Ключевые типы данных
 ```ts
-type catalog = Product[]; //Католог продуктов
-type list = Product[]; //Лист продуктов дабавленный в корзину
-type total = number; // Цена продукта
-type baseURL = string; // Адрес сервера
-type button = HTMLButtonElement; //Кнопка на странице
-type content = HTMLElement; //Контент в модальном окне
-
-//Содержимое карточки продукта
-interface ProductInter {
-  image: string; //URL-ссылка на картинку продукта
-  title: string; //Название продукта
-  price: number; //Цена продукта
-  category: string; //Категория продукта
-  description: string; //Описание продукта
+export interface ProductInter {
+  image: string;
+  title:string;
+  price: string;
+  category: string;
+  description: string;
 }
 
-//Содержимое форм пользователя при оформлении заказа
-interface UserInter {
-  paymentMethod: string; //Способ оплаты
-  address: string; //Адрес пользователя
-  email: string; //Почта пользователя
-  phone: number; //Телефон рользователя
+export interface ICatalog{
+  catalog: ProductInter[];
+  addProduct(product: Product): void;
+}
+export interface IModal {
+  buttonClose: HTMLButtonElement;
+  open(): void;
+  close(): void;
 }
 
-enum Events {
-  DELETE_PRODUCT = 'basket:delet-product', //Удаление продукта {basket, product}
-  CLOSE_MODAL = 'modal:close-modal', //Закрытие модального окна {modal}
-  OPEN_MODAL = 'modal:open-modal', //Открытие модального окна {modal}
-  CLEAR_INPUT = 'validation:clear-input', //Очистка инпута {validation, input}
-  SET_ERROR_MESSANGER = 'validation:set-error-messanger', //Установка сообщения об ошибке {validation, span}
-  CHECK_CORRECT = 'validation:check-correcr', //Проверка инпута на ошибку {validation, input}
+export interface IBasket {
+  list: Product[];
+  total: number;
 }
 ```
