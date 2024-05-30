@@ -1,24 +1,35 @@
-import { Product } from "../components/common/Product";
+export type FormErrors = Partial<Record<keyof IOrder, string>>;
 
-export interface ProductInter {
-  image: string;
-  title:string;
-  price: string;
+export type ApiListResponse<Type> = {
+  total: number,
+  items: Type[]
+};
+
+export interface IProductItem {
+  id: string;
+  title: string;
   category: string;
-  description: string;
+  description?: string;
+  image: string;
+  price: number;
 }
 
-export interface ICatalog{
-  catalog: ProductInter[];
-  addProduct(product: Product): void;
+export interface IAppState {
+  catalog: IProductItem[];
 }
-export interface IModal {
-  buttonClose: HTMLButtonElement;
-  open(): void;
-  close(): void;
+export interface IOrderForm {
+  payment: string;
+  address: string;
 }
 
-export interface IBasket {
-  list: Product[];
-  total: number;
+export interface IContactsForm {
+  email: string;
+  phone: string;
+}
+export interface IOrder extends IOrderForm, IContactsForm {
+  total: number,
+  items: string[]
+}
+export interface IOrderResult {
+  id: string;
 }

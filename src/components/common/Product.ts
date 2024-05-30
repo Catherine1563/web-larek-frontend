@@ -1,23 +1,22 @@
-import { ProductInter } from "../../types";
-
-
-export class Product implements ProductInter {
+import { IProductItem } from "../../types";
+import { Model } from "../base/Model";
+export class Product extends Model<IProductItem> {
+  category: string;
+  description: string;
   id: string;
   image: string;
   title: string;
-  price: string;
-  category: string;
-  description: string;
+  price: number;
+  isAddBasket: boolean;
 
-  constructor() {}
+  clearisAddBasket() {
+    this.isAddBasket = false;
+}
 
-  renderProduct(id: string,title: string, category: string, image: string, price: string, description: string): void {
-    this.id = id;
-    this.title = title; 
-    this.category = category; 
-    this.image = image;
-    this.price = price;
-    this.description = description;
+  set _isAddBasket(value: boolean){
+    this.isAddBasket = value;
   }
-
+  get _isAddBasket(): boolean {
+    return this.isAddBasket;
+}
 }

@@ -1,43 +1,58 @@
+import { createElement, ensureElement } from "../../utils/utils";
+import { Component } from "../base/Component";
+import { EventEmitter } from "../base/events";
 
-import { IBasket } from "../../types";
-import { Product } from "./Product";
+interface IBasketView {
+  items: HTMLElement[];
+  total: number;
+  selected: string[];
+}
 
-export class Basket implements IBasket {
-  list: Product[];
-  total: number  = 0;
+export class Basket extends Component<IBasketView> {
+  protected _list: HTMLElement;
+  protected _total: HTMLElement;
+  protected _button: HTMLButtonElement;
 
-  constructor(list: Product[] = []) {
-    this.list = list;
+  constructor(container: HTMLElement, protected events: EventEmitter) {
+      super(container);
+
+      this._list = ensureElement<HTMLElement>('.basket__list', this.container);
+      this._total = ensureElement<HTMLElement>('.basket__price', this.container);
+      this._button = ensureElement<HTMLButtonElement>('.basket__button', this.container);
+      this.setDisabled(this._button, true);
+
+      if (this._button) {
+          this._button.addEventListener('click', () => {
+              events.emit('order:open');
+          });
+      }
+
+      this.items = [];
   }
 
-  addList(it: Product): void {
-    let check: boolean = true;
-    this.list.forEach(item => {
-      if(item === it){
-        check = false;
-      }
-    });
-    if(it !== null && check){
-      this.list.push(it);
-      const kol = document.querySelector('.header__basket-counter');
-      kol.textContent = String(this.list.length);
+  set items(items: HTMLElement[]) {
+    if (items.length) {
+        this._list.replaceChildren(...items);
+    } else {
+        this._list.replaceChildren(createElement<HTMLParagraphElement>('p', {
+            textContent: 'Корзина пуста'
+        }));
     }
+}
+
+  set selected(items: number) {
+      if (items === 0) {
+        this.setDisabled(this._button, true);
+      } else {
+        this.setDisabled(this._button, false);
+      }
   }
 
-  deleteProductList(item: Product){
-    this.list = this.list.filter(product => product !== item);
-    const kol = document.querySelector('.header__basket-counter');
-    kol.textContent = String(this.list.length);
+  set total(total: number) {
+      this.setText(this._total, total + ' синапсов');
   }
 
-  totalPrice(){
-    this.list.forEach(item => {
-      if(item.price === null){
-        this.total += 0;
-      }
-      else {
-        this.total += Number(item.price);
-      }
-    });
+  get button(): HTMLButtonElement{
+    return this._button;
   }
 }
