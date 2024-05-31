@@ -43,7 +43,7 @@ yarn build
 ## Архитектура
 UML-схема проекта "Веб-ларек"
 
-![Web-ларек](https://github.com/Catherine1563/web-larek-frontend/assets/144515483/1704eb6a-e093-4b4e-ba73-6c5e19c5f4d7)
+![Web-ларек](https://github.com/Catherine1563/web-larek-frontend/assets/144515483/d5e758b4-ece1-42c8-95a8-a6ff8006c410)
 
 ## Базовый код
 
@@ -186,7 +186,7 @@ UML-схема проекта "Веб-ларек"
 
 Класс имеет такие методы:
 1. ```set id(string)```, ```set title(string)```, ```set category(string)```, ```set price(string)```, ```set image(string)```, ```set description(string | string[])``` - установка значений
-2. ```get id(): string```, ```get title(): string```, ```get category(): string```, ```get price(): string``` - получение значений
+2. ```get id(): string```, ```get title(): string```, ```get category(): string```, ```get price(): string```, ```get button(): HTMLButtonElement``` - получение значений
 
 Также у класса есть интерфейс ```ICard<T>``` содержащий элементы класса. Добавление карточки в корзину происходит через события. Данный класс относится к прикладному слой архитектуры.
 
@@ -320,5 +320,24 @@ export interface IOrder extends IOrderForm, IContactsForm {
 }
 export interface IOrderResult {
   id: string;
+}
+export enum Events {
+  ITEMS_CHANGED = 'items:changed',
+  CARD_SELECT = 'card:select',
+  BASKET_OPEN = 'basket:open',
+  BASKET_DELETE = 'basket:delete',
+  BASKET_ADD = 'basket:add',
+  PREVIEW_CHANGED = 'preview:changed',
+  FORMERRORSORDER_CHANGED = 'formErrorsOrder:change',
+  ORDER_CHANGE = 'order:change',
+  ORDER_BUTTONS_CHANGE = 'order:buttons:change',
+  ORDER_OPEN = 'order:open',
+  ORDER_READY = 'order:ready',
+  FORMERRORSCONTACTS_CHANGE = 'formErrorsContacts:change',
+  CONTACTS_CHANGE = 'contacts:change',
+  ORDER_SUBMIT = 'order:submit',
+  CONTACTS_SUBMIT = 'contacts:submit',
+  MODAL_OPEN = 'modal:open',
+  MODAL_CLOSE = 'modal:close',
 }
 ```
