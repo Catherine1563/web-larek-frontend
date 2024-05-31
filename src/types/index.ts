@@ -33,3 +33,23 @@ export interface IOrder extends IOrderForm, IContactsForm {
 export interface IOrderResult {
   id: string;
 }
+
+export enum Events {
+  ITEMS_CHANGED = 'items:changed',
+  CARD_SELECT = 'card:select',
+  BASKET_OPEN = 'basket:open',
+  BASKET_DELETE = 'basket:delete',
+  BASKET_ADD = 'basket:add',
+  PREVIEW_CHANGED = 'preview:changed',
+  FORMERRORSORDER_CHANGED = 'formErrorsOrder:change',
+  ORDER_CHANGE = 'order:change',
+  ORDER_BUTTONS_CHANGE = 'order:buttons:change',
+  ORDER_OPEN = 'order:open',
+  ORDER_READY = 'order:ready',
+  FORMERRORSCONTACTS_CHANGE = 'formErrorsContacts:change',
+  CONTACTS_CHANGE = 'contacts:change',
+  ORDER_SUBMIT = 'order:submit',
+  CONTACTS_SUBMIT = 'contacts:submit',
+  MODAL_OPEN = 'modal:open',
+  MODAL_CLOSE = 'modal:close',
+}

@@ -98,4 +98,8 @@ export class Card<T> extends Component<ICard<T>> {
           this.setText(this._description, value);
       }
   }
+
+  get button(): HTMLButtonElement{
+    return this._button;
+  }
 }

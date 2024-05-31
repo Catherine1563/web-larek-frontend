@@ -1,3 +1,4 @@
+import { Events } from "../../types";
 import { createElement, ensureElement } from "../../utils/utils";
 import { Component } from "../base/Component";
 import { EventEmitter } from "../base/events";
@@ -23,7 +24,7 @@ export class Basket extends Component<IBasketView> {
 
       if (this._button) {
           this._button.addEventListener('click', () => {
-              events.emit('order:open');
+              events.emit(Events.ORDER_OPEN);
           });
       }
 

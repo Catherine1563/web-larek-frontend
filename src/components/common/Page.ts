@@ -1,3 +1,4 @@
+import { Events } from "../../types";
 import { ensureElement } from "../../utils/utils";
 import { Component } from "../base/Component";
 import { IEvents } from "../base/events";
@@ -23,7 +24,7 @@ export class Page extends Component<IPage> {
       this._basket = ensureElement<HTMLElement>('.header__basket');
 
         this._basket.addEventListener('click', () => {
-            this.events.emit('basket:open');
+            this.events.emit(Events.BASKET_OPEN);
         });
   }
 

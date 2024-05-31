@@ -1,4 +1,4 @@
-import { IOrderForm } from "../../types";
+import { Events, IOrderForm } from "../../types";
 import { ensureElement } from "../../utils/utils";
 import { IEvents } from "../base/events";
 import { Form } from "./Form";
@@ -25,7 +25,7 @@ export class Order extends Form<IOrderForm> {
       this._buttonOnline.disabled = online;
       this._buttonOffline.disabled = offline;
   
-      this.events.emit('order:buttons:change', { online, offline });
+      this.events.emit(Events.ORDER_BUTTONS_CHANGE, { online, offline });
   }
 
   set address(value: string) {
